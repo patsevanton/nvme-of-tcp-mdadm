@@ -5,7 +5,7 @@ module "network" {
 
   folder_id = data.yandex_client_config.client.folder_id
 
-  blank_name = "instance-minimal-vpc-nat-gateway"
+  blank_name = "nvme-of-tcp-mdmadm"
   labels = {
     repo = "terraform-yacloud-modules/terraform-yandex-vpc"
   }
@@ -34,6 +34,7 @@ module "node1" {
   generate_ssh_key = false
   ssh_user         = "ubuntu"
   ssh_pubkey       = "~/.ssh/id_rsa.pub"
+  user_data        = "${file("cloud-init.yaml")}"
 }
 
 module "node2" {
@@ -52,4 +53,5 @@ module "node2" {
   generate_ssh_key = false
   ssh_user         = "ubuntu"
   ssh_pubkey       = "~/.ssh/id_rsa.pub"
+  user_data        = "${file("cloud-init.yaml")}"
 }
