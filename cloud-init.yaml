@@ -5,10 +5,8 @@ write_files:
     content: |
       #!/bin/bash
 
-      apt-get update
-      apt-get install -y nginx
-      service nginx start
-      sed -i -- "s/nginx/Yandex Cloud - ${HOSTNAME}/" /var/www/html/index.nginx-debian.html
+      curl -fsSL https://get.docker.com -o get-docker.sh
+      sudo sh get-docker.sh
     defer: true
 runcmd:
   - ["/usr/local/etc/startup.sh"]
