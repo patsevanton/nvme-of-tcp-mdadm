@@ -34,7 +34,23 @@ module "node1" {
   generate_ssh_key = false
   ssh_user         = "ubuntu"
   ssh_pubkey       = "~/.ssh/id_rsa.pub"
-  user_data        = "${file("cloud-init.yaml")}"
+  user_data        = file("cloud-init.yaml")
+  secondary_disks = {
+    disk1 = {
+      enabled     = true
+      auto_delete = true
+      type        = "network-ssd"
+      size        = 20
+      device_name = "disk1"
+    },
+    disk2 = {
+      enabled     = true
+      auto_delete = true
+      type        = "network-ssd"
+      size        = 20
+      device_name = "disk2"
+    }
+  }
 }
 
 module "node2" {
@@ -53,5 +69,21 @@ module "node2" {
   generate_ssh_key = false
   ssh_user         = "ubuntu"
   ssh_pubkey       = "~/.ssh/id_rsa.pub"
-  user_data        = "${file("cloud-init.yaml")}"
+  user_data        = file("cloud-init.yaml")
+  secondary_disks = {
+    disk1 = {
+      enabled     = true
+      auto_delete = true
+      type        = "network-ssd"
+      size        = 20
+      device_name = "disk1"
+    },
+    disk2 = {
+      enabled     = true
+      auto_delete = true
+      type        = "network-ssd"
+      size        = 20
+      device_name = "disk2"
+    }
+  }
 }
