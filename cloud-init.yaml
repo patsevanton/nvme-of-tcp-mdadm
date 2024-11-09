@@ -11,15 +11,15 @@ write_files:
       echo -e "n\np\n1\n\n\nw" | fdisk /dev/vdb
       echo -e "n\np\n1\n\n\nw" | fdisk /dev/vdc
     defer: true
-  - path: "/usr/local/bin/nvme_export.sh"
+  - path: "/usr/local/bin/nvme1n1.sh"
     permissions: "755"
     content: |
       #!/bin/bash
       
       # Define variables for the IP address, NVMe device, and subsystem name
       IP_ADDRESS=$(ip addr show eth0 | grep 'inet ' | awk '{print $2}' | cut -d/ -f1)
-      NVME_DEVICE="/dev/nvme1n1"
-      SUBSYSTEM_NAME="testnqn"
+      NVME_DEVICE="/dev/vdb1"
+      SUBSYSTEM_NAME="vdb1"
       PORT_NUMBER="4420"
       TRTYPE="tcp"
       ADRFAM="ipv4"
@@ -51,7 +51,6 @@ write_files:
       sudo ln -s /sys/kernel/config/nvmet/subsystems/$SUBSYSTEM_NAME /sys/kernel/config/nvmet/ports/1/subsystems/$SUBSYSTEM_NAME
       
       echo "NVMe over Fabrics configuration is set up."
-
     defer: true
 runcmd:
   - ["/usr/local/bin/startup.sh"]
